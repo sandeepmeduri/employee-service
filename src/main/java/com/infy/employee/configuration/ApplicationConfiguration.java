@@ -21,21 +21,21 @@ public class ApplicationConfiguration {
 	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-	
+
 	/**
 	 * @return
 	 */
 	@Bean
 	public ModelMapper modelMapper() {
-	    return new ModelMapper();
+		return new ModelMapper();
 	}
-	
+
 	/**
 	 * @return
 	 */
 	@Bean
 	public ErrorMessage errorMessage() {
-	    return new ErrorMessage();
+		return new ErrorMessage();
 	}
 
 }

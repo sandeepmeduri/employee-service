@@ -8,9 +8,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.infy.employee.dto.ErrorMessage;
 
+/**
+ * @author Sandeep_Meduri
+ *
+ */
 @ControllerAdvice
 public class ExceptionControllerAdvice {
 
+	/**
+	 * @param ex
+	 * @return
+	 */
 	@ExceptionHandler(Exception.class)
 	public HttpEntity<ErrorMessage> handleException(Exception ex) {
 		ErrorMessage error = new ErrorMessage();

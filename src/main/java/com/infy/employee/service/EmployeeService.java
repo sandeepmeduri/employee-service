@@ -41,16 +41,19 @@ public class EmployeeService {
 	 * @return
 	 */
 	public EmployeeDTO getEmployeeById(Long id) {
-		Optional<EmployeeEntity> entity =  employeeDAO.findById(id);
-		return convertToDTO(entity.get());
+		Optional<EmployeeEntity> entity = employeeDAO.findById(id);
+		if (entity.isPresent()) {
+			return convertToDTO(entity.get());
+		}
+		return null;
 	}
 
 	/**
 	 * @param employee
 	 * @return
 	 */
-	public EmployeeEntity addEmployee(EmployeeEntity employee) {
-		return employeeDAO.save(employee);
+	public EmployeeDTO addEmployee(EmployeeEntity employee) {
+		return convertToDTO(employeeDAO.save(employee));
 	}
 
 	/**

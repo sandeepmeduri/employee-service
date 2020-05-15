@@ -1,10 +1,10 @@
 #!groovy
-	def javaAgent = 'docker-slave'
+	#def javaAgent = 'docker-slave'
 	def branch
 	def projectName = 'employee-service'
 
 		// pipeline
-	    node(javaAgent) {
+	    node() {
 	    	           
 	        try {
 	            stage('Collect info') {

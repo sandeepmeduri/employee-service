@@ -1,10 +1,10 @@
 #!groovy
-	
+
 	def branch
 	def projectName = 'employee-service'
 
 		// pipeline
-	    node(javaAgent) {
+	    node() {
 	    	           
 	        try {
 	        tools {

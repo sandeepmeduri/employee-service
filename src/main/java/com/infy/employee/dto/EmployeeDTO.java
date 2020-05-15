@@ -18,7 +18,7 @@ public class EmployeeDTO extends RepresentationModel<EmployeeDTO> {
 
 	private double salary;
 
-	private double salaryInInr;
+	private double salaryInInr = Double.NaN;
 
 	public EmployeeDTO() {
 	}

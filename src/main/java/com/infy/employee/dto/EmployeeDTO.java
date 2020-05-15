@@ -6,7 +6,7 @@ import org.springframework.hateoas.RepresentationModel;
  * @author Sandeep_Meduri
  *
  */
-public class EmployeeDTO  extends RepresentationModel<EmployeeDTO>  {
+public class EmployeeDTO extends RepresentationModel<EmployeeDTO> {
 
 	private Long id;
 
@@ -17,6 +17,8 @@ public class EmployeeDTO  extends RepresentationModel<EmployeeDTO>  {
 	private String email;
 
 	private double salary;
+
+	private double salaryInInr;
 
 	public EmployeeDTO() {
 	}
@@ -67,6 +69,14 @@ public class EmployeeDTO  extends RepresentationModel<EmployeeDTO>  {
 
 	public void setSalary(double salary) {
 		this.salary = salary;
+	}
+
+	public double getSalaryInInr() {
+		return salaryInInr;
+	}
+
+	public void setSalaryInInr(double salaryInInr) {
+		this.salaryInInr = salaryInInr;
 	}
 
 }

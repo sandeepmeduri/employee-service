@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.infy.employee.assembler.EmployeeAssembler;
 import com.infy.employee.domain.EmployeeEntity;
+import com.infy.employee.dto.CurrencyExchangeDTO;
 import com.infy.employee.dto.EmployeeDTO;
 import com.infy.employee.service.EmployeeService;
 
@@ -42,6 +44,19 @@ public class EmployeeController {
 	private ModelMapper mapper;
 
 	@Autowired
+	private RestTemplate restTemplate;
+
+	private final String currencUrl = "http://3.136.11.40:8083/api/currency-exchange";
+
+	private final String from = "from";
+
+	private final String to = "to";
+
+	private final String USD = "USD";
+
+	private final String INR = "INR";
+
+	@Autowired
 	public EmployeeController(EmployeeService service) {
 		this.service = service;
 	}
@@ -55,7 +70,10 @@ public class EmployeeController {
 			@ApiResponse(code = 404, message = "employee details not found") })
 	public HttpEntity<List<EmployeeDTO>> getEmployees() {
 		List<EmployeeDTO> employees = this.service.getEmployees();
-		employees.stream().forEach(p -> this.assembler.toModel(p));
+		employees.stream().forEach(p -> {
+			this.assembler.toModel(p);
+			getCurrencyExchange(p, USD, INR);
+		});
 		return ResponseEntity.ok(employees);
 	}
 
@@ -70,6 +88,7 @@ public class EmployeeController {
 	public HttpEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
 		EmployeeDTO employee = service.getEmployeeById(id);
 		this.assembler.toModel(employee);
+		getCurrencyExchange(employee, USD, INR);
 		return ResponseEntity.ok(employee);
 	}
 
@@ -85,6 +104,7 @@ public class EmployeeController {
 		if (null == service.getEmployeeById(entity.getId())) {
 			EmployeeDTO dto = service.addEmployee(entity);
 			this.assembler.toModel(dto);
+			getCurrencyExchange(dto, USD, INR);
 			return ResponseEntity.ok(dto);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
@@ -94,7 +114,7 @@ public class EmployeeController {
 	 * @param entity
 	 * @return
 	 */
-	@PutMapping(consumes = "application/json",produces = "application/json", path = "/employee")
+	@PutMapping(consumes = "application/json", produces = "application/json", path = "/employee")
 	@ApiOperation(value = "Update an employee", response = EmployeeDTO.class, tags = "update Employee")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "updated employee successfully"),
 			@ApiResponse(code = 404, message = "employee details not found") })
@@ -102,6 +122,7 @@ public class EmployeeController {
 		if (!(null == service.getEmployeeById(entity.getId()))) {
 			EmployeeDTO dto = service.addEmployee(entity);
 			this.assembler.toModel(dto);
+			getCurrencyExchange(dto, USD, INR);
 			return ResponseEntity.ok(dto);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
@@ -119,9 +140,20 @@ public class EmployeeController {
 		if (!(null == service.getEmployeeById(id))) {
 			EmployeeDTO dto = service.getEmployeeById(id);
 			service.removeEmployee(mapper.map(dto, EmployeeEntity.class));
+			getCurrencyExchange(dto, USD, INR);
 			return ResponseEntity.ok(dto);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+	}
+
+	private void getCurrencyExchange(EmployeeDTO employee, String sourceCurrency, String destCurrency) {
+		String restUrl = currencUrl + "/" + from + "/" + sourceCurrency + "/" + to + "/"+destCurrency;
+		try {
+			ResponseEntity<CurrencyExchangeDTO> dto = restTemplate.getForEntity(restUrl, CurrencyExchangeDTO.class);
+			employee.setSalaryInInr(employee.getSalary() * dto.getBody().getConversion());
+		}catch(Exception ex){
+			
+		}
 	}
 
 }

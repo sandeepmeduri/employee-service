@@ -1,10 +1,11 @@
 #!groovy
-
+	def mvnHome = tool name: 'Apache Maven 3.6.0', type: 'maven'
+	def javaAgent = 'openjdk'
 	def branch
 	def projectName = 'employee-service'
 
 		// pipeline
-	    node() {
+	    node(javaAgent) {
 	    	           
 	        try {
 	            stage('Collect info') {
@@ -13,7 +14,7 @@
 	            }
 	
 	            stage('Build') {
-					sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -Dmaven.test.skip=true"
+					sh "${mvnHome}/bin/mvn -DskipTests clean package"
 	                stash 'workspace'
 	            }
 	

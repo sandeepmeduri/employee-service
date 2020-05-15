@@ -1,5 +1,5 @@
 #!groovy
-	#def javaAgent = 'docker-slave'
+
 	def branch
 	def projectName = 'employee-service'
 

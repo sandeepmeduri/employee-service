@@ -9,10 +9,8 @@
 		<version>2.2.7.RELEASE</version>
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>Infy-employee-service</artifactId>
+	<artifactId>employee-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Infy-employee-service</name>
-	<description>Service for access of Infy employees</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

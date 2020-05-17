@@ -1,5 +1,5 @@
 #!groovy
-  def branch = 'master'
+  def BRANCH_NAME = 'master'
   def projectName = 'employee-service'
   
 pipeline {

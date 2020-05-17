@@ -3,29 +3,19 @@
   def branch
   def projectName = 'employee-service'
   
-  tools {
+pipeline {
+	agent javaAgent
+	tools {
          maven 'M3'
-      }	
-
-	// pipeline
-	node(javaAgent) {
-	  
-	  stages{	           
-	   try {
-
-	    stage('Collect info') {
-	      checkout scm
+    }
+	stages {
+		stage ('Collect info') {
+		  checkout scm
 	      branch = env.BRANCH_NAME
-	    }	
-	    stage('Build') {
+		}
+		stage ('Build') {
 		  sh "mvn clean package -Dmaven.test.skip=true"
 	      stash 'workspace'
-        }
-	
-	   } catch (def e) {
-		print "Exception occurred while running the pipeline"+ e
-	   } finally {
-	   	deleteDir()
-	   }
-	  }
-    }
+		}
+	}
+}

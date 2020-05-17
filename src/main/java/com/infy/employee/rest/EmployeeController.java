@@ -48,7 +48,7 @@ public class EmployeeController {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private final String currencUrl = "http://3.136.11.40:8083/api/currency-exchange";
+	private final String currencUrl = "http://18.191.179.132:8881/api/currencyrate";
 
 	private final String from = "from";
 

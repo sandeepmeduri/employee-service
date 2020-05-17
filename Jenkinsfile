@@ -13,7 +13,7 @@ node(javaAgent) {
 
     stage('Build') {
    	  steps{
-		sh "${M3_HOME}\bin\mvn clean package -Dmaven.test.skip=true"
+		sh "env.M3_HOME\bin\mvn clean package -Dmaven.test.skip=true"
         stash 'workspace'
       }
     } 

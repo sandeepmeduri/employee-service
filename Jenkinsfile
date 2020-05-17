@@ -4,7 +4,8 @@
   def projectName = 'employee-service'
 
 	// pipeline
-	node(javaAgent) {	  	           
+	node(javaAgent) {	
+	  	           
 	  try {
 
 	    stage('Collect info') {
@@ -12,7 +13,7 @@
 	      branch = env.BRANCH_NAME
 	    }	
 	    stage('Build') {
-		  sh "mvn -DskipTests clean package"
+		  sh "mvn mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.skip=true"
 	      stash 'workspace'
         }
 	

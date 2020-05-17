@@ -22,7 +22,7 @@ node(javaAgent) {
 	    sh "sudo docker rm ${projectName}"
         }
       sh "sudo docker build -t ${projectName} ."
-  	  sh "sudo docker run --restart=always --network=host --name=${projectName} 8880:8880 -td ${projectName}"
+  	  sh "sudo docker run --restart=always --network=host --name=${projectName} -p 8880:8880 -td ${projectName}"
 	}
 
   } catch (def e) {

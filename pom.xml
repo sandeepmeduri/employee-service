@@ -7,7 +7,6 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.7.RELEASE</version>
-		<relativePath>../Infy-employee-service/pom.xml</relativePath>
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>Infy-employee-service</artifactId>

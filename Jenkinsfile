@@ -2,12 +2,14 @@
   def javaAgent = 'docker-slave'
   def branch
   def projectName = 'employee-service'
+  
+  tools {
+         maven 'M3'
+      }	
 
 	// pipeline
 	node(javaAgent) {
-	  tools {
-         maven 'M3'
-      }	
+	  
 	  stages{	           
 	   try {
 

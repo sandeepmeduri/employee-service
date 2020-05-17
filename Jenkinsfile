@@ -4,7 +4,7 @@
   def projectName = 'employee-service'
   
 pipeline {
-	agent javaAgent
+	agent {javaAgent}
 	tools {
          maven 'M3'
     }

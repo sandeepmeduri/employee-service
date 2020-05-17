@@ -1,7 +1,7 @@
 #!groovy
 def javaAgent = 'docker-slave'
 def branch
-def projectName = 'Infy-employee-service'
+def projectName = 'employee-service'
 
 node(javaAgent) {
   try {

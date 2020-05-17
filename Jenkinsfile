@@ -1,24 +1,29 @@
 #!groovy
-  def BRANCH_NAME = 'master'
-  def projectName = 'employee-service'
-  
-pipeline {
-	agent { label 'docker-slave' }
-	tools {
-         maven 'M3'
+def javaAgent = 'docker-slave'
+
+    def branch
+	def projectName = 'mylibrary-book-service'
+	def gitCredentials = 'mylibrary-github'
+    // pipeline
+    node(javaAgent) {
+
+        try {
+            stage('Collect info') {
+                checkout scm
+                branch = env.BRANCH_NAME
+            }
+
+            stage('Build') {
+            	tools {
+         			maven 'M3'
+   				}
+				sh "mvn clean package -Dmaven.test.skip=true"
+                stash 'workspace'
+            }
+
+        } catch (def e) {
+			print "Exception occurred while running the pipeline"+ e
+        } finally {
+        	deleteDir()
+    	}
     }
-	stages {
-	  stage ('Collect info') {
-		steps{
-		  checkout scm
-	      branch = ${BRANCH_NAME}
-		}
-	  }	
-	  stage ('Build') {
-		steps{
-		  sh "mvn clean package -Dmaven.test.skip=true"
-	      stash 'workspace'
-		}
-	  }
-	}
-}

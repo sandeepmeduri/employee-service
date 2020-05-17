@@ -1,8 +1,6 @@
 #!groovy
 def javaAgent = 'docker-slave'
 def branch
-def projectName = 'mylibrary-book-service'
-def gitCredentials = 'mylibrary-github'
 
 node(javaAgent) {
   try {
@@ -12,11 +10,9 @@ node(javaAgent) {
     }
 
     stage('Build') {
-   	  steps{
-   	    def mavenHome= tool 'M3'
-		sh "${mavenHome}/bin/mvn clean package -Dmaven.test.skip=true"
-        stash 'workspace'
-      }
+   	  def mavenHome= tool 'M3'
+	  sh "${mavenHome}/bin/mvn clean package -Dmaven.test.skip=true"
+      stash 'workspace'
     } 
 
   } catch (def e) {

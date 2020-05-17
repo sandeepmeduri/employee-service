@@ -1,10 +1,9 @@
 #!groovy
-  def javaAgent = 'docker-slave'
-  def branch
+  def branch = 'master'
   def projectName = 'employee-service'
   
 pipeline {
-	agent any
+	agent { label 'docker-slave' }
 	tools {
          maven 'M3'
     }
@@ -12,7 +11,7 @@ pipeline {
 	  stage ('Collect info') {
 		steps{
 		  checkout scm
-	      branch = env.BRANCH_NAME
+	      branch = ${BRANCH_NAME}
 		}
 	  }	
 	  stage ('Build') {
